@@ -6,40 +6,40 @@ import {
   Delete,
   Body,
   Param,
-  Redirect,
-  HttpCode,
 } from '@nestjs/common';
 import { createProductDto } from './dto/create-product.dto';
+import { ProductService } from './product.service';
+import { Product } from './interfaces/product.interface';
 
 @Controller('product')
 export class ProductController {
+  constructor(private readonly productService: ProductService) {}
+
   @Get()
-  @HttpCode(302)
-  @Redirect('https://hudc.org')
-  getAllProducts(): string {
-    return 'all products returned';
+  getAllProducts(): Promise<Product[]> {
+    return this.productService.getAllProducts();
   }
 
   @Post('create')
-  createProduct(@Body() create: createProductDto): string {
-    return `name: ${create.name} Description: ${create.description}`;
+  createProduct(@Body() create: createProductDto): Promise<Product> {
+    return this.productService.createProduct(create);
   }
 
   @Get(':id')
-  getOneProduct(@Param('id') id: string): string {
-    return `id: ${id}`;
+  getOneProduct(@Param('id') id: string): Promise<Product> {
+    return this.productService.getOneProduct(id);
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): string {
-    return `Deleted Product: ${id}`;
+  deleteProduct(@Param('id') id: string): Promise<Product> {
+    return this.productService.deleteProduct(id);
   }
 
   @Put(':id')
   updateProduct(
     @Body() update: createProductDto,
     @Param('id') id: string,
-  ): string {
-    return `Updated Product: ${update.name}, ${update.description}`;
+  ): Promise<Product> {
+    return this.productService.updateProduct(id, update);
   }
 }

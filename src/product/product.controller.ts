@@ -6,11 +6,14 @@ import {
   Delete,
   Body,
   Param,
+  UseInterceptors,
 } from '@nestjs/common';
 import { createProductDto } from './dto/create-product.dto';
 import { ProductService } from './product.service';
 import { Product } from './interfaces/product.interface';
+import { LoggingInterceptor } from '../log.interceptor';
 
+@UseInterceptors(LoggingInterceptor)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}

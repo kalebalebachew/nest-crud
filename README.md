@@ -6,4 +6,4 @@
 - **CRUD operations** with MongoDB integration using Mongoose
 - **Dependency Injection** for cleaner, testable code
 
-#### The API includes a simple **Product model with endpoints to create, read, update, and delete products**. 
+#### The API includes a simple **Product model with endpoints to create, read, update, and delete products**.
